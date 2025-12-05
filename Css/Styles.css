@@ -1,0 +1,621 @@
+/* ============================================
+   COSMIC / SPACEY THEME - FUNDAMENTOS WEB
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap');
+
+/* ============================================
+   KEYFRAMES & ANIMATIONS
+   ============================================ */
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(20px); }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 255, 136, 0.5),
+                    0 0 10px rgba(0, 255, 136, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.8),
+                    0 0 40px rgba(0, 255, 136, 0.5),
+                    0 0 60px rgba(0, 255, 136, 0.3);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes stars-twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes orbit {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(360deg); }
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cosmic-border {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(100, 200, 255, 0.6), 0 0 60px rgba(0, 255, 136, 0.3); }
+    100% { box-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+}
+
+@keyframes neon-text {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(0, 255, 136, 0.5),
+                     0 0 10px rgba(100, 200, 255, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.8),
+                     0 0 20px rgba(100, 200, 255, 0.6),
+                     0 0 30px rgba(0, 255, 136, 0.4);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Rajdhani', monospace;
+    overflow-x: hidden;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1625 100%);
+    color: #00ff88;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Animated starfield background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 60px 70px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 50px 50px, #ddd, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 90px 10px, #fff, rgba(0, 0, 0, 0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: stars-twinkle 5s infinite;
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.5;
+}
+
+/* Cosmic nebula glow background */
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(100, 200, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(200, 100, 255, 0.08) 0%, transparent 50%);
+    animation: rotate-slow 30s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ============================================
+   CONTAINER & LAYOUT
+   ============================================ */
+
+.cosmic-container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container, .container-fluid {
+    background: rgba(10, 14, 39, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 15px;
+    padding: 40px;
+    margin-top: 30px;
+    animation: slide-in 0.8s ease-out;
+    box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   NAVIGATION & HEADER
+   ============================================ */
+
+.navbar {
+    background: rgba(15, 22, 37, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8em;
+    font-weight: 900;
+    background: linear-gradient(135deg, #00ff88, #64c8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: neon-text 3s ease-in-out infinite;
+}
+
+.nav-link {
+    color: rgba(0, 255, 136, 0.7) !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #00ff88 !important;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00ff88, #64c8ff);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   HEADINGS & TEXT
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #00ff88;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: neon-text 3s ease-in-out infinite;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+h2 {
+    font-size: 2em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border-left: 4px solid #00ff88;
+    padding-left: 15px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #64c8ff;
+}
+
+p {
+    color: rgba(0, 255, 136, 0.8);
+    font-size: 1.05em;
+}
+
+a {
+    color: #00ff88;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #64c8ff;
+    text-shadow: 0 0 10px rgba(100, 200, 255, 0.6);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00ff88, #00dd66) !important;
+    border-color: #00ff88 !important;
+    color: #0a0e27 !important;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.8),
+                0 0 60px rgba(0, 255, 136, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #64c8ff, #3d9cff) !important;
+    border-color: #64c8ff !important;
+    color: #0a0e27 !important;
+    box-shadow: 0 0 20px rgba(100, 200, 255, 0.4);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 0 30px rgba(100, 200, 255, 0.8),
+                0 0 60px rgba(100, 200, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   CARDS & BOXES
+   ============================================ */
+
+.card {
+    background: rgba(26, 31, 58, 0.8) !important;
+    border: 1px solid rgba(0, 255, 136, 0.3) !important;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.5), transparent);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0, 255, 136, 0.8) !important;
+    box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2),
+                0 0 30px rgba(100, 200, 255, 0.1);
+}
+
+.card-title {
+    color: #00ff88;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
+.card-text {
+    color: rgba(0, 255, 136, 0.7);
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+.form-control, .form-select {
+    background: rgba(26, 31, 58, 0.8) !important;
+    border: 1px solid rgba(0, 255, 136, 0.3) !important;
+    color: #00ff88 !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Rajdhani', monospace;
+}
+
+.form-control::placeholder {
+    color: rgba(0, 255, 136, 0.4) !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(26, 31, 58, 0.95) !important;
+    border-color: #00ff88 !important;
+    color: #00ff88 !important;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.form-label {
+    color: #00ff88;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.95em;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   LISTS & TABLES
+   ============================================ */
+
+ul, ol {
+    color: rgba(0, 255, 136, 0.8);
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.table {
+    color: #00ff88 !important;
+}
+
+.table-dark {
+    background-color: rgba(26, 31, 58, 0.8) !important;
+}
+
+.table-dark > thead > tr > th {
+    border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    color: #00ff88;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table-dark > tbody > tr {
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    transition: all 0.3s ease;
+}
+
+.table-dark > tbody > tr:hover {
+    background-color: rgba(0, 255, 136, 0.1) !important;
+}
+
+/* ============================================
+   ALERTS & BADGES
+   ============================================ */
+
+.alert {
+    background: rgba(26, 31, 58, 0.8);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: #00ff88;
+    border-radius: 8px;
+}
+
+.alert-info {
+    border-color: rgba(100, 200, 255, 0.3);
+}
+
+.badge {
+    background: linear-gradient(135deg, #00ff88, #64c8ff);
+    color: #0a0e27;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* ============================================
+   SPECIAL COSMIC ELEMENTS
+   ============================================ */
+
+.cosmic-box {
+    background: rgba(26, 31, 58, 0.7);
+    border: 2px solid rgba(0, 255, 136, 0.3);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
+    animation: cosmic-border 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.cosmic-box:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 255, 136, 0.8);
+}
+
+.cosmic-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    background: linear-gradient(135deg, #00ff88, #64c8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: neon-text 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.glow-text {
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.8),
+                 0 0 20px rgba(100, 200, 255, 0.4);
+    animation: glow 2s ease-in-out infinite;
+}
+
+.neon-border {
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5),
+                inset 0 0 10px rgba(0, 255, 136, 0.1);
+    border-radius: 8px;
+}
+
+.float-element {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .container {
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    .navbar-brand {
+        font-size: 1.3em;
+    }
+
+    .nav-link {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .container {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(26, 31, 58, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00ff88, #64c8ff);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #00dd66, #3d9cff);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background: rgba(15, 22, 37, 0.9);
+    border-top: 2px solid rgba(0, 255, 136, 0.3);
+    color: rgba(0, 255, 136, 0.7);
+    text-align: center;
+    padding: 30px;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 5px 0;
+    color: rgba(0, 255, 136, 0.6);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-glow {
+    animation: neon-text 3s ease-in-out infinite;
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.rotate {
+    animation: rotate-slow 10s linear infinite;
+}
+
+.shimmer-effect {
+    background: linear-gradient(90deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 255, 136, 0.3) 50%, rgba(0, 255, 136, 0.1) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite;
+}
