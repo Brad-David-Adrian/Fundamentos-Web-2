@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto — Adrian David Brad Rus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Css/Styles.css">
+</head>
+<body class="cosmic-container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-5">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">✉️ Fundamentos Web</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Yo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="topic.html">Tema</a></li>
+                    <li class="nav-item"><a class="nav-link" href="net.html">Redes</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="contacts.html">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="degree.html">Grado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="fii.html">FII</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="text-glow mb-5">Contacto</h1>
+        
+        <p class="lead cosmic-box">
+            ¿Tienes preguntas sobre desarrollo web, mis proyectos o simplemente quieres saludar? ¡Me encantaría saber de ti! 
+            Estoy disponible a través de los siguientes canales.
+        </p>
+
+        <div class="row mt-5">
+            <div class="col-lg-6 mb-4">
+                <div class="card float-element">
+                    <div class="card-body">
+                        <h5 class="card-title">✉️ Información de Contacto</h5>
+                        <p class="card-text">
+                            <strong>Correo Principal:</strong> <a href="mailto:9406435@alumnos.ufv.es">9406435@alumnos.ufv.es</a><br>
+                            <strong>Ubicación:</strong> Colmenar Viejo, Madrid, España<br>
+                            <strong>Disponibilidad:</strong> Respondo mensajes en horario de estudios<br>
+                            <strong>Mejor hora:</strong> Tardes (17:00 - 21:00 CET)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card float-element">
+                    <div class="card-body">
+                        <h5 class="card-title">🔗 Redes Sociales</h5>
+                        <p class="card-text">
+                            Sígueme en mis redes para ver mis últimos proyectos, actualizaciones y recursos de desarrollo web.
+                        </p>
+                        <a href="https://github.com/Brad-David-Adrian" target="_blank" class="btn btn-sm btn-primary">GitHub</a>
+                        <a href="#" class="btn btn-sm btn-secondary">LinkedIn</a>
+                        <a href="#" class="btn btn-sm btn-dark">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cosmic-box mt-5">
+            <h2>Envíame un Mensaje</h2>
+            <p>Completa el formulario abajo y me pondré en contacto contigo lo antes posible.</p>
+            <form onsubmit="handleSubmit(event)" class="mt-4">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre *</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Tu nombre completo" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico *</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="tu@email.com" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Asunto *</label>
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="¿Sobre qué es tu mensaje?" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="message" class="form-label">Mensaje *</label>
+                    <textarea class="form-control" id="message" name="message" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
+            </form>
+        </div>
+
+        <div class="text-center mt-5 mb-5">
+            <a href="../index.html" class="btn btn-primary btn-lg">← Volver al Inicio</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto">
+        <p>© 2025 Adrian David Brad Rus — Todos los derechos reservados</p>
+        <p class="text-muted">Desarrollado con 💚</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Js/Code.js"></script>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            alert('¡Gracias ' + name + '! Tu mensaje ha sido recibido. Me pondré en contacto contigo pronto.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
