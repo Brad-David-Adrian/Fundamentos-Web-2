@@ -74,18 +74,18 @@ class CosmicCursor {
             top: ${this.y}px;
             width: 8px;
             height: 8px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.8), transparent);
+            background: radial-gradient(circle, rgba(216, 191, 136, 0.8), rgba(179, 150, 100, 0.4), transparent);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 15px rgba(216, 191, 136, 0.7), 0 0 25px rgba(179, 150, 100, 0.3);
         `;
 
         document.body.appendChild(trail);
 
         let opacity = 1;
         const interval = setInterval(() => {
-            opacity -= 0.1;
+            opacity -= 0.08;
             trail.style.opacity = opacity;
 
             if (opacity <= 0) {
@@ -182,7 +182,7 @@ class GlowEffects {
     }
 
     addGlow(element) {
-        element.style.textShadow = '0 0 20px rgba(0, 255, 136, 1), 0 0 40px rgba(100, 200, 255, 0.6)';
+        element.style.textShadow = '0 0 20px rgba(216, 191, 136, 0.8), 0 0 40px rgba(179, 150, 100, 0.5)';
         element.style.transition = 'all 0.3s ease';
     }
 

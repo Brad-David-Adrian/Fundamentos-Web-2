@@ -3,39 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundamentos Web - Navegación Cósmica</title>
+    <title>Fundamentos Web - Navegación de Pharloom</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Cosmic Styles -->
-    <link rel="stylesheet" href="Css/Styles.css">
+    <!-- Fuentes estilo Hollow Knight (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
         body { 
             margin: 0; 
             overflow: hidden; 
-            background: #050505; 
-            font-family: 'Rajdhani', sans-serif; 
+            background-color: #0e0b0a; /* Oscuro profundo estilo Vacío */
+            font-family: 'Crimson Text', serif; 
         }
+        
         canvas { 
             display: block; 
+            outline: none;
+        }
+
+        /* Viñeta para dar atmósfera de cueva/juego */
+        .vignette {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.8) 100%);
+            z-index: 10;
         }
         
         #ui {
             position: absolute;
-            top: 20px;
+            top: 30px;
             width: 100%;
             text-align: center;
-            color: rgba(0, 255, 136, 0.7);
+            color: rgba(216, 191, 136, 0.6); /* Dorado pálido */
             pointer-events: none;
             user-select: none;
-            text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 14px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Cinzel', serif;
             font-weight: 700;
-            animation: neon-text 3s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(216, 191, 136, 0.2);
+            z-index: 20;
         }
 
         #info-overlay {
@@ -43,112 +56,109 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10, 14, 39, 0.9);
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            padding: 20px 30px;
-            border-radius: 10px;
-            color: rgba(0, 255, 136, 0.8);
-            font-size: 12px;
-            font-family: 'Rajdhani', monospace;
+            background: rgba(18, 14, 12, 0.85);
+            border: 1px solid rgba(100, 90, 80, 0.5);
+            padding: 15px 40px;
+            border-radius: 2px; /* Bordes más rectos estilo HK */
+            color: #d8bf88;
+            font-size: 13px;
+            font-family: 'Crimson Text', serif;
             text-align: center;
             letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            backdrop-filter: blur(10px);
-            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            /* Decoración estilo borde */
+            border-left: 3px solid #d8bf88;
+            border-right: 3px solid #d8bf88;
         }
 
         .nav-overlay {
             position: absolute;
             top: 50%;
-            right: 30px;
+            right: 40px;
             transform: translateY(-50%);
-            background: rgba(10, 14, 39, 0.85);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            padding: 20px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            max-width: 200px;
+            background: linear-gradient(135deg, rgba(20, 16, 14, 0.95), rgba(10, 8, 7, 0.98));
+            border: 1px solid #5c5043;
+            padding: 25px;
+            min-width: 180px;
             z-index: 100;
-            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Decoración estilo carta de Hollow Knight */
+        .nav-overlay::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid rgba(216, 191, 136, 0.2);
+            pointer-events: none;
         }
 
         .nav-overlay h3 {
-            color: #00ff88;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #d8bf88;
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(216, 191, 136, 0.3);
+            padding-bottom: 10px;
         }
 
         .nav-overlay a {
             display: block;
-            color: rgba(0, 255, 136, 0.7);
-            margin: 8px 0;
-            font-size: 0.85em;
+            color: #a89f91;
+            margin: 10px 0;
+            font-size: 1em;
             transition: all 0.3s ease;
             text-decoration: none;
             padding: 5px 10px;
-            border-radius: 5px;
+            font-family: 'Crimson Text', serif;
+            position: relative;
         }
 
         .nav-overlay a:hover {
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+            color: #fff;
+            background: rgba(216, 191, 136, 0.1);
+            transform: translateX(5px);
+            text-shadow: 0 0 5px rgba(216, 191, 136, 0.5);
         }
 
-        @keyframes neon-text {
-            0%, 100% {
-                text-shadow: 0 0 5px rgba(0, 255, 136, 0.5),
-                             0 0 10px rgba(100, 200, 255, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 10px rgba(0, 255, 136, 0.8),
-                             0 0 20px rgba(100, 200, 255, 0.6),
-                             0 0 30px rgba(0, 255, 136, 0.4);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* Icono sutil al hacer hover */
+        .nav-overlay a:hover::before {
+            content: '✦';
+            position: absolute;
+            left: -10px;
+            color: #d8bf88;
+            font-size: 0.8em;
         }
 
         @media (max-width: 768px) {
-            .nav-overlay {
-                display: none;
-            }
-
-            #info-overlay {
-                font-size: 11px;
-                padding: 15px 20px;
-                bottom: 20px;
-            }
-
-            #ui {
-                font-size: 12px;
-            }
+            .nav-overlay { display: none; }
+            #ui { font-size: 10px; top: 15px; }
+            #info-overlay { width: 90%; font-size: 11px; padding: 10px; border: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="ui">Desplázate o arrastra para rotar • Haz clic para navegar</div>
+    <div class="vignette"></div>
+
+    <div id="ui">✦ Gira el Sello de Seda para Navegar ✦</div>
 
     <div id="info-overlay">
-        🌌 Orbita Cósmica Interactiva | Fundamentos Web 🌌
+        Reino de Pharloom  •  Fundamentos Web
     </div>
 
     <div class="nav-overlay">
-        <h3>🧭 Navegación</h3>
-        <a href="index.html">🌟 Inicio</a>
-        <a href="public/about.html">ℹ️ Acerca de</a>
-        <a href="public/topic.html">📚 Temas</a>
-        <a href="public/net.html">🌐 Redes</a>
-        <a href="public/contacts.html">📧 Contacto</a>
-        <a href="public/degree.html">🎓 Grado</a>
-        <a href="public/fii.html">⚙️ FII</a>
+        <h3>Mapa del Reino</h3>
+        <a href="index.html">Inicio</a>
+        <a href="public/about.html">El Viajero (Yo)</a>
+        <a href="public/topic.html">Tema</a>
+        <a href="public/net.html">Red</a>
+        <a href="public/contacts.html">Mensajeria</a>
+        <a href="public/degree.html">Grado</a>
+        <a href="public/fii.html">FII</a>
     </div>
 
     <!-- Import Map -->
@@ -164,91 +174,141 @@
     <script type="module">
         import * as THREE from 'three';
 
-        // --- Configuration ---
+        // --- Configuración y Datos ---
+        // Usamos tus enlaces
         const LINKS = [
-            { name: "Inicio", url: "index.html" },
-            { name: "Acerca de", url: "public/about.html" },
-            { name: "Temas", url: "public/topic.html" },
-            { name: "Redes", url: "public/net.html" },
-            { name: "Contacto", url: "public/contacts.html" },
-            { name: "Grado", url: "public/degree.html" }
+            { name: "INICIO", url: "index.html" },
+            { name: "YO", url: "public/about.html" },
+            { name: "TEMA", url: "public/topic.html" },
+            { name: "REDES", url: "public/net.html" },
+            { name: "CONTACTO", url: "public/contacts.html" },
+            { name: "GRADO", url: "public/degree.html" }
         ];
         
-        const RING_RADIUS = 6.5;
-        const PLANET_SIZE = 3;
+        // Colores de Hollow Knight (Silksong palette)
+        const COLORS = {
+            bg: 0x0e0b0a,       // Fondo casi negro
+            silk: 0xd8bf88,     // Dorado pálido / Seda
+            void: 0x000000,     // Vacío puro
+            accent: 0xff4d4d,   // Rojo Hornet (sutil)
+            mist: 0x3d3530      // Niebla ambiental
+        };
+
+        const RING_RADIUS = 7;
+        const PLANET_SIZE = 2.8;
         const TILT_ANGLE = Math.PI / 6;
 
-        // --- Scene Setup ---
+        // --- Escena ---
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x050505, 0.04);
+        scene.fog = new THREE.FogExp2(COLORS.bg, 0.035); // Niebla densa para profundidad
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.set(0, 0, 16);
+        camera.position.set(0, 0, 17);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         document.body.appendChild(renderer.domElement);
 
-        // --- Lighting ---
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        sunLight.position.set(5, 3, 10);
-        scene.add(sunLight);
-
-        const ambientLight = new THREE.AmbientLight(0x404080, 1);
+        // --- Iluminación Dramática ---
+        const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
         scene.add(ambientLight);
 
-        // --- 1. The Planet ---
+        // Luz principal (como una lámpara de lumafly lejana)
+        const mainLight = new THREE.PointLight(COLORS.silk, 2, 50);
+        mainLight.position.set(10, 10, 10);
+        scene.add(mainLight);
+
+        // Luz de contra (Rim light) para el efecto dramático
+        const backLight = new THREE.DirectionalLight(0x667788, 1);
+        backLight.position.set(-5, 5, -10);
+        scene.add(backLight);
+
+        // --- 1. El "Planeta" (Capullo del Vacío) ---
         const planetGroup = new THREE.Group();
         scene.add(planetGroup);
 
-        const planetGeo = new THREE.IcosahedronGeometry(PLANET_SIZE, 2);
-        const planetMat = new THREE.MeshBasicMaterial({ 
-            color: 0x00aaff, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.3 
+        // Geometría orgánica: Usamos icosaedro y deformamos vértices para que parezca un nido/capullo
+        const planetGeo = new THREE.IcosahedronGeometry(PLANET_SIZE, 4); // Alta resolución
+        const posAttribute = planetGeo.getAttribute('position');
+        const vertex = new THREE.Vector3();
+
+        for (let i = 0; i < posAttribute.count; i++) {
+            vertex.fromBufferAttribute(posAttribute, i);
+            // Ruido simple para deformar
+            const distortion = Math.sin(vertex.x * 2.5) * Math.sin(vertex.y * 2.5) * Math.sin(vertex.z * 2.5) * 0.2;
+            vertex.normalize().multiplyScalar(PLANET_SIZE + distortion);
+            posAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+        }
+        planetGeo.computeVertexNormals();
+
+        // Material estilo "caparazón antiguo"
+        const planetMat = new THREE.MeshStandardMaterial({ 
+            color: 0x1a1614,
+            roughness: 0.8,
+            metalness: 0.2,
+            flatShading: false
         });
         const planetMesh = new THREE.Mesh(planetGeo, planetMat);
         planetGroup.add(planetMesh);
 
-        const coreGeo = new THREE.IcosahedronGeometry(PLANET_SIZE * 0.9, 2);
-        const coreMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-        planetGroup.add(new THREE.Mesh(coreGeo, coreMat));
+        // Núcleo brillante interno (Visible a través de huecos si hiciéramos el mesh transparente, 
+        // o simplemente como aura)
+        const auraGeo = new THREE.IcosahedronGeometry(PLANET_SIZE * 1.05, 1);
+        const auraMat = new THREE.MeshBasicMaterial({ 
+            color: COLORS.silk, 
+            wireframe: true, 
+            transparent: true, 
+            opacity: 0.1 
+        });
+        const auraMesh = new THREE.Mesh(auraGeo, auraMat);
+        // Rotar el aura independientemente
+        scene.add(auraMesh);
 
-        // --- 2. The Ring System ---
+        // --- 2. Anillo de Seda ---
         const tiltContainer = new THREE.Group();
         tiltContainer.rotation.z = TILT_ANGLE;
-        tiltContainer.rotation.x = TILT_ANGLE * 0.5;
+        tiltContainer.rotation.x = TILT_ANGLE * 0.3;
         scene.add(tiltContainer);
 
         const ringRotator = new THREE.Group();
         tiltContainer.add(ringRotator);
 
-        const ringGeo = new THREE.TorusGeometry(RING_RADIUS, 0.05, 16, 100);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x555555, transparent: true, opacity: 0.5 });
+        // El anillo visual (Un hilo de seda brillante)
+        const ringGeo = new THREE.TorusGeometry(RING_RADIUS, 0.03, 16, 200);
+        const ringMat = new THREE.MeshBasicMaterial({ 
+            color: COLORS.silk, 
+            transparent: true, 
+            opacity: 0.6 
+        });
         const visualRing = new THREE.Mesh(ringGeo, ringMat);
         visualRing.rotation.x = Math.PI / 2;
         ringRotator.add(visualRing);
 
-        // --- 3. Create Text Labels ---
+        // --- 3. Etiquetas de Texto (Runas/Menú) ---
         function createTextSprite(text) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.width = 512;
             canvas.height = 128;
 
-            context.font = 'bold 70px Arial';
+            // Fuente Cinzel para ese toque medieval/fantástico
+            context.font = 'bold 60px "Cinzel", serif'; 
             context.textAlign = 'center';
             context.textBaseline = 'middle';
-            context.fillStyle = 'white';
+            
+            // Efecto de brillo en el texto
+            context.shadowColor = "rgba(216, 191, 136, 0.8)";
+            context.shadowBlur = 15;
+            context.fillStyle = '#d8bf88';
             context.fillText(text, 256, 64);
 
             const texture = new THREE.CanvasTexture(canvas);
             const material = new THREE.SpriteMaterial({ 
                 map: texture, 
                 transparent: true,
-                opacity: 0.8
+                opacity: 0.8,
+                depthWrite: false // Para que brillen bien
             });
 
             const sprite = new THREE.Sprite(material);
@@ -269,7 +329,7 @@
             
             sprite.userData = { 
                 url: link.url, 
-                originalScale: 4,
+                originalScale: 3.5,
                 id: index
             };
 
@@ -278,103 +338,166 @@
             items.push(sprite);
         });
 
-        // --- 4. Starfield Background ---
-        const starsGeo = new THREE.BufferGeometry();
-        const starCount = 1000;
-        const posArray = new Float32Array(starCount * 3);
-        for(let i = 0; i < starCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 80;
-        }
-        starsGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
-        const starMesh = new THREE.Points(starsGeo, starsMat);
-        scene.add(starMesh);
+        // --- 4. Partículas (Esporas / Esencia de Sueño) ---
+        // En Hollow Knight siempre hay cosas flotando en el aire
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 800;
+        const posArray = new Float32Array(particlesCount * 3);
+        const randomArray = new Float32Array(particlesCount); // Para movimiento individual
 
-        // --- 5. Interaction Logic ---
-        let targetRotation = 0;
+        for(let i = 0; i < particlesCount; i++) {
+            // Distribución esférica alrededor de la escena
+            const r = 10 + Math.random() * 20;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            
+            posArray[i*3] = r * Math.sin(phi) * Math.cos(theta);
+            posArray[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+            posArray[i*3+2] = r * Math.cos(phi);
+            
+            randomArray[i] = Math.random();
+        }
+
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeo.setAttribute('aRandom', new THREE.BufferAttribute(randomArray, 1));
+
+        const particlesMat = new THREE.PointsMaterial({
+            color: 0xffeedd,
+            size: 0.1,
+            transparent: true,
+            opacity: 0.4,
+            blending: THREE.AdditiveBlending // Brillo mágico
+        });
+        
+        const particleSystem = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particleSystem);
+
+        // --- 5. Lógica de Interacción ---
+        let velocity = 0;
         let currentRotation = 0;
         let isDragging = false;
         let startX = 0;
-        let velocity = 0;
+        let glowTime = 0;
 
         const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        
+        const mouse = new THREE.Vector2(-100, -100);
+
+        // Eventos del Mouse
         window.addEventListener('wheel', (e) => {
-            velocity += e.deltaY * 0.001;
+            velocity += e.deltaY * 0.0008;
         });
 
         window.addEventListener('mousedown', (e) => {
             isDragging = true;
             startX = e.clientX;
+            document.body.style.cursor = 'grabbing';
         });
-        
+
         window.addEventListener('mousemove', (e) => {
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
             if (isDragging) {
                 const deltaX = e.clientX - startX;
-                velocity += deltaX * 0.0005;
+                velocity += deltaX * 0.0004;
                 startX = e.clientX;
             }
         });
 
-        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.style.cursor = 'default';
+        });
 
+        // Click para navegar
         window.addEventListener('click', () => {
+            if (Math.abs(velocity) > 0.01) return; // No clickear si estás girando rápido
+            
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(items);
+            
             if (intersects.length > 0) {
                 const item = intersects[0].object;
                 const url = item.userData.url;
-                item.material.color.set(0x00ff00);
+                
+                // Efecto visual al clickear (destello)
+                item.material.color.set(0xffffff); 
+                item.scale.multiplyScalar(1.2);
+                
+                // Redirigir después de breve delay
                 setTimeout(() => {
                     window.location.href = url;
-                }, 200);
+                }, 300);
             }
         });
 
+        // Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- 6. Animation Loop ---
+        // --- 6. Animación ---
         function animate() {
             requestAnimationFrame(animate);
 
-            velocity *= 0.95;
+            glowTime += 0.01;
+
+            // Física de rotación con fricción
+            velocity *= 0.95; 
             currentRotation += velocity;
+            
+            // Rotación del anillo
             ringRotator.rotation.y = currentRotation;
 
-            planetMesh.rotation.y -= 0.002;
-            planetMesh.rotation.z -= 0.001;
+            // Rotación lenta y "flotante" del planeta
+            planetMesh.rotation.y -= 0.001;
+            planetMesh.rotation.x = Math.sin(glowTime * 0.5) * 0.05;
+            
+            // El aura gira al revés para dar complejidad
+            auraMesh.rotation.y += 0.002;
+            auraMesh.rotation.z += 0.001;
 
+            // Latido del anillo visual (efecto seda viva)
+            visualRing.material.opacity = 0.4 + Math.sin(glowTime * 2) * 0.2;
+
+            // Partículas flotando suavemente
+            particleSystem.rotation.y = glowTime * 0.02;
+
+            // Raycaster y Hover Effects
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(items);
             const hoveredObj = intersects.length > 0 ? intersects[0].object : null;
 
-            document.body.style.cursor = hoveredObj ? 'pointer' : 'default';
+            if(!isDragging) {
+                document.body.style.cursor = hoveredObj ? 'pointer' : 'default';
+            }
 
             items.forEach(item => {
                 let targetScale = item.userData.originalScale;
                 let targetOpacity = 0.5;
 
                 if (item === hoveredObj) {
-                    targetScale *= 1.3;
-                    targetOpacity = 1;
+                    targetScale *= 1.4;
+                    targetOpacity = 1; // Totalmente visible
+                    item.material.color.set(0xffffff); // Blanco brillante al hover
                 } else {
+                    item.material.color.set(COLORS.silk); // Color seda normal
+                    
+                    // Cálculo de profundidad para ocultar items traseros
                     const worldPos = new THREE.Vector3();
                     item.getWorldPosition(worldPos);
-                    if (worldPos.z > 0) {
+                    
+                    if (worldPos.z > 1) { // Está en frente
                         targetOpacity = 0.8;
-                    } else {
-                        targetOpacity = 0.3;
+                    } else { // Está detrás del planeta
+                        targetOpacity = 0.15;
+                        targetScale *= 0.8;
                     }
                 }
 
+                // Interpolación suave (Lerp)
                 item.scale.lerp(new THREE.Vector3(targetScale, targetScale * 0.25, 1), 0.1);
                 item.material.opacity = THREE.MathUtils.lerp(item.material.opacity, targetOpacity, 0.1);
             });
@@ -387,8 +510,5 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Cosmic JS -->
-    <script src="Js/Code.js"></script>
 </body>
 </html>
